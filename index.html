@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz League of legends alphabet</title>
     <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h1>LoL Alphabet Quiz</h1>
+    <form id="formulaire-champion">
+        <input type="text" id="saisie-champion" placeholder="Champion" autocomplete="off" autofocus>
+        <button type="submit">Valider</button>
+    </form>
+    <p id="message-resultat"></p>
+    <p id="compteur"></p>
+    <ul id="champions-trouves">
+
+    </ul>
+
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
