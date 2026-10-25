@@ -1,3 +1,4 @@
+import { normalizeChampionName } from '../utils/normalize.js';
 export class ChampionModel {
     constructor() {                    // constructeur : initialisation de l'objet
     this.version = null;
@@ -24,7 +25,8 @@ export class ChampionModel {
    * @returns {Array} - Un tableau contenant les champions correspondants.
    */
   getByLetter(letter) {
-    return this.champions.filter(champion => champion.name.startsWith(letter));
+    const normalizedLetter = normalizeChampionName(letter);
+    return this.champions.filter(champion => normalizeChampionName(champion.name).startsWith(normalizedLetter));
   }
 
 
