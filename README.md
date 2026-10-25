@@ -16,7 +16,7 @@ Un jeu web où il faut deviner **tous les champions de League of Legends, lettre
 - [x] Structure du projet en architecture MVC
 - [x] Chargement des champions depuis l'API Data Dragon
 - [x] Normalisation des noms (accents, apostrophes, casse)
-- [ ] Saisie et vérification des réponses
+- [x] Saisie et vérification des réponses
 - [ ] Affichage des icônes et compteur par lettre
 - [ ] Gestion des tours (A → Z)
 - [ ] Score et écran de fin de partie
