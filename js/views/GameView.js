@@ -1,17 +1,18 @@
 export class GameView {
-    constructor() {
+    constructor(version) {
         this.saisieChampionInput = document.getElementById('saisie-champion');
         this.messageResultat = document.getElementById('message-resultat');
         this.compteur = document.getElementById('compteur');
         this.championsTrouvesList = document.getElementById('champions-trouves');
         this.formulaire = document.getElementById('formulaire-champion');
+        this.version = version;
     }
 
     /**
      * Lit la valeur saisie dans le champ de saisie du champion.
      * @returns {string} La valeur saisie.
      */
-    lireSasie() {
+    lireSaisie() {
         return this.saisieChampionInput.value;
     }
 
@@ -37,6 +38,22 @@ export class GameView {
      */
     afficherCompteur(trouves, total) {
         this.compteur.textContent = `${trouves} / ${total}`;
+    }
+
+    ajouterChampionTrouve(champion) {
+        const li = document.createElement('li');
+
+        const img = document.createElement('img');
+        img.src = `https://ddragon.leagueoflegends.com/cdn/${this.version}/img/champion/${champion.id}.png`;
+        img.alt = champion.name;
+        
+        const nom = document.createElement('span');
+        nom.textContent = champion.name;
+        
+        li.appendChild(img);
+        li.appendChild(nom);
+
+        this.championsTrouvesList.appendChild(li);
     }
 
 }

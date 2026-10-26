@@ -8,22 +8,24 @@ export class GameModel {
     }
 
     /**
-     * Vérifie si le champion saisi par le joueur est correct et met à jour l'état du jeu en conséquence.
+     * Vérifie si le champion saisi par le joueur est correct, déjà trouvé, ou incorrect.
      * @param {string} texte 
      * @returns {string} Le résultat de la vérification.
      */
     guess(texte) {
         const saisie = normalizeChampionName(texte);
-        if (this.trouves.includes(saisie)) {
-            return "already"; // Le champion a déjà été trouvé.
-        }else if (this.champions.some(champion => normalizeChampionName(champion.name) === saisie)) {
-            this.trouves.push(saisie);
-            return "found"; // Le champion a été trouvé.
-        } else if (this.allChampions.some(champion => normalizeChampionName(champion.name) === saisie)) {
-            return "wrong-letter"; // Le champion existe mais ne commence pas par la lettre en cours.
-        }else {
-            return "unknown"; // Le champion n'a pas été trouvé.
+        if (this.trouves.some(champion => normalizeChampionName(champion.name) === saisie)) {
+            return "already";
         }
+        const champion = this.champions.find(champion => normalizeChampionName(champion.name) === saisie);
+        if (champion) {
+            this.trouves.push(champion);
+            return "found";
+        }
+        if (this.allChampions.some(champion => normalizeChampionName(champion.name) === saisie)) {
+            return "wrong-letter";
+        }
+        return "unknown";
     }
 
 }
