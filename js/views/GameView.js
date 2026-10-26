@@ -6,6 +6,9 @@ export class GameView {
         this.championsTrouvesList = document.getElementById('champions-trouves');
         this.formulaire = document.getElementById('formulaire-champion');
         this.version = version;
+        this.lettreEnCours = document.getElementById('lettre-en-cours');
+        this.boutonValider = this.formulaire.querySelector('button');
+        this.regles = document.getElementById('regles');
     }
 
     /**
@@ -40,6 +43,10 @@ export class GameView {
         this.compteur.textContent = `${trouves} / ${total}`;
     }
 
+    /**
+     * Ajoute un champion trouvé à la liste des champions trouvés.
+     * @param {Object} champion 
+     */
     ajouterChampionTrouve(champion) {
         const li = document.createElement('li');
 
@@ -56,4 +63,33 @@ export class GameView {
         this.championsTrouvesList.appendChild(li);
     }
 
+    /**
+     * Affiche la lettre en cours pour laquelle le joueur doit deviner les champions.
+     * @param {string} lettre 
+     */
+    afficherLettre(lettre) {
+        this.lettreEnCours.textContent = lettre;
+    }
+
+    /**
+     * Vide la liste des champions trouvés.
+     */
+    viderChampionsTrouves() {
+        this.championsTrouvesList.replaceChildren();
+    }
+
+    /**
+     * Désactive le champ de saisie du champion pour empêcher l'utilisateur de saisir de nouvelles réponses.
+     * Cela peut être utilisé lorsque le jeu est terminé ou lorsqu'une action spécifique nécessite de bloquer la saisie.
+     */
+    desactiverSaisie() {
+        this.saisieChampionInput.disabled = true;
+        this.boutonValider.disabled = true;
+    }
+    /**
+     * Ferme la boîte de dialogue des règles du jeu.
+     */
+    fermerRegles() {
+        this.regles.open = false;
+    }
 }
