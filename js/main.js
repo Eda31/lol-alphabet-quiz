@@ -8,7 +8,7 @@ await championModel.RecupChampion();
 
 const gameModel = new GameModel("K", championModel.getByLetter("K"), championModel.champions);
 
-const gameView = new GameView();
+const gameView = new GameView(championModel.version);
 
 const gameController = new GameController(gameModel, gameView);
 gameController.init();

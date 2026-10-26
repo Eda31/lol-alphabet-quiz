@@ -19,7 +19,7 @@ export class GameController {
      */
     handleSubmit(event) {
         event.preventDefault();
-        const saisie = this.gameView.lireSasie().trim();
+        const saisie = this.gameView.lireSaisie().trim();
         // Vérifie si la saisie est vide
         if (saisie === "") {
             this.gameView.afficherMessage("Veuillez saisir un champion.");
@@ -34,6 +34,8 @@ export class GameController {
             case "found":
                 this.gameView.afficherMessage("Bravo ! Vous avez trouvé un champion !");
                 this.gameView.afficherCompteur(this.gameModel.trouves.length, this.gameModel.champions.length);
+                const dernierChampion = this.gameModel.trouves.at(-1);
+                this.gameView.ajouterChampionTrouve(dernierChampion);
                 break;
             case "wrong-letter":
                 this.gameView.afficherMessage("Ce champion existe, mais ne commence pas par la lettre en cours.");
