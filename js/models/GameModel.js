@@ -1,7 +1,7 @@
 import { normalizeChampionName } from '../utils/normalize.js';
 export class GameModel {
-    constructor(letter, champions, allChampions) {
-        this.letter = letter; // La lettre en cours pour laquelle le joueur doit deviner les champions.
+    constructor(lettre, champions, allChampions) {
+        this.lettre = lettre; // La lettre en cours pour laquelle le joueur doit deviner les champions.
         this.champions = champions; // La liste des champions disponibles pour le jeu.
         this.allChampions = allChampions; // La liste complète des champions pour référence.
         this.trouves = []; // Un tableau pour stocker les champions trouvés par le joueur.
@@ -26,6 +26,14 @@ export class GameModel {
             return "wrong-letter";
         }
         return "unknown";
+    }
+
+    /**
+     * Vérifie si la partie est terminée avec la lettre en cours.
+     * @returns {boolean}
+     */
+    estTerminee() {
+        return this.trouves.length === this.champions.length;
     }
 
 }

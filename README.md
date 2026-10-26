@@ -18,7 +18,7 @@ Un jeu web où il faut deviner **tous les champions de League of Legends, lettre
 - [x] Normalisation des noms (accents, apostrophes, casse)
 - [x] Saisie et vérification des réponses
 - [x] Affichage des icônes et compteur par lettre
-- [ ] Gestion des tours (A → Z)
+- [x] Gestion des tours (A → Z)
 - [ ] Score et écran de fin de partie
 - [ ] Chronomètre et bouton « abandonner »
 - [ ] Design responsive (mobile)

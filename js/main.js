@@ -10,5 +10,5 @@ const gameModel = new GameModel("K", championModel.getByLetter("K"), championMod
 
 const gameView = new GameView(championModel.version);
 
-const gameController = new GameController(gameModel, gameView);
+const gameController = new GameController(championModel, gameView);
 gameController.init();
