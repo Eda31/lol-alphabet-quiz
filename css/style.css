@@ -1,4 +1,4 @@
-#champions-trouves {
+#champions-trouves, #liste-finale {
     list-style: none;
     padding: 0;
     display: flex;
@@ -6,13 +6,14 @@
     gap: 12px;
 }
 
-#champions-trouves li {
+
+#champions-trouves li, #liste-finale li {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#champions-trouves img {
+#champions-trouves img, #liste-finale img {
     max-width: 100%;
 }
 

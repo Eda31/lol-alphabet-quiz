@@ -9,26 +9,39 @@
 </head>
 <body>
     <h1>LoL Alphabet Quiz</h1>
-    <h2>Lettre en cours : <span id="lettre-en-cours"></span></h2>
-    <details id="regles" open>
-        <summary>Comment jouer ?</summary>
-        <p>Retrouve tous les champions de League of Legends, lettre par lettre, de A à Z.</p>
-        <ol>
-            <li>Une lettre s'affiche : trouve tous les champions dont le nom commence par cette lettre.</li>
-            <li>Tape un nom, puis valide avec Entrée ou le bouton « Valider ».</li>
-            <li>Les majuscules, les accents et les apostrophes sont ignorés : « kaisa » est accepté pour Kai'Sa.</li>
-            <li>Quand tous les champions de la lettre sont trouvés, tu passes à la suivante.</li>
-        </ol>
-    </details>
-    <form id="formulaire-champion">
-        <input type="text" id="saisie-champion" placeholder="Champion" autocomplete="off" autofocus>
-        <button type="submit">Valider</button>
-    </form>
-    <p id="message-resultat"></p>
-    <p id="compteur"></p>
-    <ul id="champions-trouves">
+    
+    <div id="zone-jeu">
+        <h2>Lettre en cours : <span id="lettre-en-cours"></span></h2>
+        <details id="regles" open>
+            <summary>Comment jouer ?</summary>
+            <p>Retrouve tous les champions de League of Legends, lettre par lettre, de A à Z.</p>
+            <ol>
+                <li>Une lettre s'affiche : trouve tous les champions dont le nom commence par cette lettre.</li>
+                <li>Tape un nom, puis valide avec Entrée ou le bouton « Valider ».</li>
+                <li>Les majuscules, les accents et les apostrophes sont ignorés : « kaisa » est accepté pour Kai'Sa.</li>
+                <li>Quand tous les champions de la lettre sont trouvés, tu passes à la suivante.</li>
+            </ol>
+        </details>
+        <form id="formulaire-champion">
+            <input type="text" id="saisie-champion" placeholder="Champion" autocomplete="off" autofocus>
+            <button type="submit">Valider</button>
+        </form>
+        <p id="message-resultat"></p>
+        <p id="compteur"></p>
+        <button id="lettre-suivante" hidden>Lettre suivante</button>
+        <ul id="champions-trouves">
+        </ul>
+    </div>
 
-    </ul>
+    <section id="ecran-fin" hidden>
+        <h2>Bravo, alphabet terminé !</h2>
+        <p id="stat-trouves"></p>
+        <p id="stat-temps"></p>
+        <p id="stat-erreurs"></p>
+        <ul id="liste-finale">
+        </ul>
+        <button id="rejouer">Rejouer</button>
+    </section>
 
     <script type="module" src="js/main.js"></script>
 </body>

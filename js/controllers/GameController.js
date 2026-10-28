@@ -1,4 +1,5 @@
 import { GameModel } from '../models/GameModel.js';
+import { GameStats } from '../models/GameStats.js';
 export class GameController {
     constructor(championModel, gameView) {
         this.championModel = championModel;
@@ -6,6 +7,7 @@ export class GameController {
         this.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         this.currentLetterIndex = 0;
         this.gameModel = null;
+        this.stats = new GameStats();
     }
 
     /**
@@ -14,6 +16,8 @@ export class GameController {
     init() {
         this.demarrerTour();
         this.gameView.formulaire.addEventListener("submit", (event) => this.handleSubmit(event));
+        this.gameView.boutonLettreSuivante.addEventListener("click", () => this.lettreSuivanteCliquee());
+        this.gameView.boutonRejouer.addEventListener("click", () => location.reload());
     }
 
     /**
@@ -31,29 +35,40 @@ export class GameController {
             this.gameView.viderSaisie();
             return;
         }
+        this.stats.demarrerChrono();
         const resultat = this.gameModel.guess(saisie);
         switch (resultat) {
             case "already":
                 this.gameView.afficherMessage("Vous avez déjà trouvé ce champion !");
                 break;
             case "found": {
+                const championTrouve = this.gameModel.trouves.at(-1);
+                this.gameView.ajouterChampionTrouve(championTrouve);
+                this.stats.ajouterChampion(championTrouve);
+                this.gameView.afficherCompteur(this.gameModel.trouves.length, this.gameModel.champions.length);
                 if (this.gameModel.estTerminee()) {
-                    this.gameView.afficherMessage("Bravo ! Vous avez trouvé tous les champions pour cette lettre !");
+                    this.gameView.desactiverSaisie();
+                    this.gameView.afficherBoutonLettreSuivante();
+                    this.stats.terminerTour(this.gameModel.lettre);
+                    if (this.currentLetterIndex < this.alphabet.length - 1) {
+                        this.gameView.modifierBoutonLettreSuivanteTexte("Lettre suivante");
+                        this.gameView.afficherMessage("Bravo ! Vous avez trouvé tous les champions pour cette lettre !");
+                    } else {
+                        this.gameView.modifierBoutonLettreSuivanteTexte("Voir mes résultats");
+                        this.gameView.afficherMessage("Bravo ! Vous avez terminé l'alphabet !");
+                    }
                 } else {
                     this.gameView.afficherMessage("Bravo ! Vous avez trouvé un champion !");
-                }
-                this.gameView.afficherCompteur(this.gameModel.trouves.length, this.gameModel.champions.length);
-                this.gameView.ajouterChampionTrouve(this.gameModel.trouves.at(-1));
-                if (this.gameModel.estTerminee()) {
-                    this.passerALaLettreSuivante();
                 }
                 break;
             }
             case "wrong-letter":
                 this.gameView.afficherMessage("Ce champion existe, mais ne commence pas par la lettre en cours.");
+                this.stats.ajouterErreur();
                 break;
             case "unknown":
                 this.gameView.afficherMessage("Ce champion n'existe pas.");
+                this.stats.ajouterErreur();
                 break;
             default:
                 this.gameView.afficherMessage("Erreur inconnue.");
@@ -71,16 +86,31 @@ export class GameController {
         this.gameView.afficherLettre(lettre);
         this.gameView.afficherCompteur(this.gameModel.trouves.length, this.gameModel.champions.length);
         this.gameView.viderSaisie();
+        this.gameView.afficherMessage(`Devinez les champions commençant par la lettre "${lettre}" !`);
     }
 
+    /**
+     * Passe à la lettre suivante de l'alphabet et démarre un nouveau tour si possible. Si toutes les lettres ont été traitées, désactive la saisie et affiche un message de félicitations.
+     * @returns {void}
+     */
     passerALaLettreSuivante() {
         this.currentLetterIndex++;
         if (this.currentLetterIndex < this.alphabet.length) {
             this.demarrerTour();
         } else {
             this.gameView.desactiverSaisie();
-            this.gameView.afficherMessage("Félicitations ! Vous avez terminé l'alphabet !");
+            this.gameView.afficherEcranFin(this.stats);
         }
         
+    }
+
+    /**
+     * Gère le clic sur le bouton "Lettre suivante" en cachant le bouton, activant la saisie et passant à la lettre suivante.
+     * @returns {void}
+     */
+    lettreSuivanteCliquee() {
+        this.gameView.cacherBoutonLettreSuivante();
+        this.gameView.activerSaisie();
+        this.passerALaLettreSuivante();
     }
 }
