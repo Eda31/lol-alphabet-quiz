@@ -4,7 +4,7 @@ export class GameController {
     constructor(championModel, gameView) {
         this.championModel = championModel;
         this.gameView = gameView;
-        this.alphabet = "YZ".split("");
+        this.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         this.currentLetterIndex = 0;
         this.gameModel = null;
         this.stats = new GameStats();
