@@ -4,7 +4,7 @@ export class GameController {
     constructor(championModel, gameView) {
         this.championModel = championModel;
         this.gameView = gameView;
-        this.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        this.alphabet = "Z".split("");
         this.currentLetterIndex = 0;
         this.gameModel = null;
         this.stats = new GameStats();
@@ -90,7 +90,7 @@ export class GameController {
     }
 
     /**
-     * Passe à la lettre suivante de l'alphabet et démarre un nouveau tour si possible. Si toutes les lettres ont été traitées, désactive la saisie et affiche un message de félicitations.
+     * Passe à la lettre suivante de l'alphabet et démarre le tour suivant
      * @returns {void}
      */
     passerALaLettreSuivante() {
@@ -98,7 +98,6 @@ export class GameController {
         if (this.currentLetterIndex < this.alphabet.length) {
             this.demarrerTour();
         } else {
-            this.gameView.desactiverSaisie();
             this.gameView.afficherEcranFin(this.stats);
         }
         

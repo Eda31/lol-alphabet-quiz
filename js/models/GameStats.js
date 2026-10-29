@@ -19,7 +19,7 @@ export class GameStats {
      * Arrete le chrono, calcul la duree du tour
      * increment les donnees lettre, la duree, et les erreurs du tour
      * remet a 0 ou null les erreur et le debut du tour pour le tour suivant
-     * @param {} lettre 
+     * @param {string} lettre 
      */
     terminerTour(lettre) {
         const duree = Date.now() - this.debut;
@@ -37,7 +37,7 @@ export class GameStats {
 
     /**
      * ajoute le champion trouve a la liste des champion deja trouvé
-     * @param {} champion 
+     * @param {Object} champion 
      */
     ajouterChampion(champion) {
         this.championsTrouves.push(champion);
