@@ -174,8 +174,12 @@ export class GameView {
      * @returns {string}
      */
     formaterTemps(ms) {
-        const minutes = Math.floor(ms / 60000);
+        const heures = Math.floor(ms / 3600000);
+        const minutes = Math.floor((ms % 3600000) / 60000);
         const secondes = Math.floor((ms % 60000) / 1000);
+        if (heures > 0) {
+                return `${heures} h ${minutes} min ${secondes} s`;
+        }
         return `${minutes} min ${secondes} s`;
     }
 }
