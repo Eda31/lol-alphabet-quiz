@@ -11,6 +11,7 @@
     <h1>LoL Alphabet Quiz</h1>
     
     <div id="zone-jeu">
+        <p id="chrono">Temps : 0 min 0 s</p>
         <h2>Lettre en cours : <span id="lettre-en-cours"></span></h2>
         <details id="regles" open>
             <summary>Comment jouer ?</summary>
@@ -28,6 +29,7 @@
         </form>
         <p id="message-resultat"></p>
         <p id="compteur"></p>
+        <button id="abandonner" type="button">Abandonner la lettre</button>
         <button id="lettre-suivante" hidden>Lettre suivante</button>
         <ul id="champions-trouves">
         </ul>
@@ -38,7 +40,11 @@
         <p id="stat-trouves"></p>
         <p id="stat-temps"></p>
         <p id="stat-erreurs"></p>
+        <h3>Champions trouvés</h3>
         <ul id="liste-finale">
+        </ul>
+        <h3 id="titre-manques" hidden>Champions non trouvés</h3>
+        <ul id="liste-manques">
         </ul>
         <button id="rejouer">Rejouer</button>
     </section>

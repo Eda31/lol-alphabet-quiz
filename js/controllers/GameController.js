@@ -4,7 +4,7 @@ export class GameController {
     constructor(championModel, gameView) {
         this.championModel = championModel;
         this.gameView = gameView;
-        this.alphabet = "Z".split("");
+        this.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         this.currentLetterIndex = 0;
         this.gameModel = null;
         this.stats = new GameStats();
@@ -18,6 +18,11 @@ export class GameController {
         this.gameView.formulaire.addEventListener("submit", (event) => this.handleSubmit(event));
         this.gameView.boutonLettreSuivante.addEventListener("click", () => this.lettreSuivanteCliquee());
         this.gameView.boutonRejouer.addEventListener("click", () => location.reload());
+        this.gameView.boutonAbandonner.addEventListener("click", () => this.abandonnerLettre());
+        this.minuteur = null;
+        this.minuteur = setInterval(() => {
+            this.gameView.afficherChrono(this.stats.tempsEcoule());
+        }, 1000);
     }
 
     /**
@@ -48,6 +53,7 @@ export class GameController {
                 this.gameView.afficherCompteur(this.gameModel.trouves.length, this.gameModel.champions.length);
                 if (this.gameModel.estTerminee()) {
                     this.gameView.desactiverSaisie();
+                    this.gameView.afficherBoutonAbandonner(false);
                     this.gameView.afficherBoutonLettreSuivante();
                     this.stats.terminerTour(this.gameModel.lettre);
                     if (this.currentLetterIndex < this.alphabet.length - 1) {
@@ -87,6 +93,7 @@ export class GameController {
         this.gameView.afficherCompteur(this.gameModel.trouves.length, this.gameModel.champions.length);
         this.gameView.viderSaisie();
         this.gameView.afficherMessage(`Devinez les champions commençant par la lettre "${lettre}" !`);
+        this.gameView.afficherBoutonAbandonner(true);
     }
 
     /**
@@ -98,9 +105,9 @@ export class GameController {
         if (this.currentLetterIndex < this.alphabet.length) {
             this.demarrerTour();
         } else {
+            clearInterval(this.minuteur);
             this.gameView.afficherEcranFin(this.stats);
         }
-        
     }
 
     /**
@@ -111,5 +118,27 @@ export class GameController {
         this.gameView.cacherBoutonLettreSuivante();
         this.gameView.activerSaisie();
         this.passerALaLettreSuivante();
+    }
+
+    /**
+     * Abandonne la lettre en cours : enregistre les champions non trouvés
+     * comme erreurs, les affiche, puis propose de passer à la suite.
+     */
+    abandonnerLettre() {
+        const manques = this.gameModel.champions.filter(
+            champion => !this.gameModel.trouves.includes(champion)
+        );
+        this.stats.ajouterManques(manques);
+        this.stats.terminerTour(this.gameModel.lettre);
+        this.gameView.afficherBoutonAbandonner(false);
+        this.gameView.afficherChampionsManques(manques);
+        this.gameView.desactiverSaisie();
+        if (this.currentLetterIndex < this.alphabet.length - 1) {
+            this.gameView.modifierBoutonLettreSuivanteTexte("Lettre suivante");
+        } else {
+            this.gameView.modifierBoutonLettreSuivanteTexte("Voir mes résultats");
+        }
+        this.gameView.afficherBoutonLettreSuivante();
+        this.gameView.afficherMessage(`Lettre abandonnée : ${manques.length} champion(s) non trouvé(s).`);
     }
 }

@@ -10,7 +10,6 @@ export class GameView {
         this.boutonValider = this.formulaire.querySelector('button');
         this.regles = document.getElementById('regles');
         this.boutonLettreSuivante = document.getElementById('lettre-suivante');
-
         this.zoneJeu = document.getElementById('zone-jeu');
         this.ecranFin = document.getElementById('ecran-fin');
         this.statTrouves = document.getElementById('stat-trouves');
@@ -18,6 +17,10 @@ export class GameView {
         this.statErreurs = document.getElementById('stat-erreurs');
         this.listeFinale = document.getElementById('liste-finale');
         this.boutonRejouer = document.getElementById('rejouer');
+        this.boutonAbandonner = document.getElementById('abandonner');
+        this.titreManques = document.getElementById('titre-manques');
+        this.listeManques = document.getElementById('liste-manques');
+        this.chrono = document.getElementById('chrono');
     }
 
     /**
@@ -124,25 +127,33 @@ export class GameView {
     }
 
     /**
-     * Affiche l'écran de fin avec les statistiques et la liste complète des champions triés.
-     * @param {Object} stats 
+     * Affiche l'écran de fin : statistiques, champions trouvés et champions non trouvés.
+     * @param {Object} stats
      */
     afficherEcranFin(stats) {
-        // 1. Écrire les trois phrases avec template literals et la méthode formaterTemps
-        this.statTrouves.textContent = `Nombre de champions trouvés : ${stats.championsTrouves.length}`;
+        const nbTrouves = stats.championsTrouves.length;
+        const total = nbTrouves + stats.championsManques.length;
+
+        this.statTrouves.textContent = `Champions trouvés : ${nbTrouves} / ${total}`;
         this.statTemps.textContent = `Temps total : ${this.formaterTemps(stats.tempsTotal())}`;
         this.statErreurs.textContent = `Nombre d'erreurs : ${stats.erreurTotal()}`;
-        // 2. Trier une copie de la liste des champions par ordre alphabétique
-        const championsTries = [...stats.championsTrouves].sort((a, b) => 
-            a.name.localeCompare(b.name)
-        );
-        // 3. Ajouter un <li> par champion dans liste-finale
+
+        // Champions trouvés, triés par ordre alphabétique
+        const trouvesTries = [...stats.championsTrouves].sort((a, b) => a.name.localeCompare(b.name));
         this.listeFinale.replaceChildren();
-        championsTries.forEach(champion => {
-            const li = this.creerElementChampion(champion);
-            this.listeFinale.appendChild(li);
+        trouvesTries.forEach(champion => {
+            this.listeFinale.appendChild(this.creerElementChampion(champion));
         });
-        // 4. Cacher toute la zone de jeu en un seul geste et afficher l'écran de fin
+
+        // Champions non trouvés : on affiche le titre seulement s'il y en a
+        const manquesTries = [...stats.championsManques].sort((a, b) => a.name.localeCompare(b.name));
+        this.listeManques.replaceChildren();
+        manquesTries.forEach(champion => {
+            const li = this.creerElementChampion(champion);
+            li.classList.add('manque');
+            this.listeManques.appendChild(li);
+        });
+        this.titreManques.hidden = manquesTries.length === 0;
         this.zoneJeu.hidden = true;
         this.ecranFin.hidden = false;
     }
@@ -181,5 +192,33 @@ export class GameView {
                 return `${heures} h ${minutes} min ${secondes} s`;
         }
         return `${minutes} min ${secondes} s`;
+    }
+
+    /**
+     * Affiche ou cache le bouton « Abandonner la lettre ».
+     * @param {boolean} visible
+     */
+    afficherBoutonAbandonner(visible) {
+        this.boutonAbandonner.hidden = !visible;
+    }
+
+    /**
+     * Ajoute les champions non trouvés à la liste, avec un style différent.
+     * @param {Array} manques
+     */
+    afficherChampionsManques(manques) {
+        manques.forEach(champion => {
+            const li = this.creerElementChampion(champion);
+            li.classList.add('manque');
+            this.championsTrouvesList.appendChild(li);
+        });
+    }
+
+    /**
+     * Affiche le temps de jeu écoulé.
+     * @param {number} ms - le temps en millisecondes
+     */
+    afficherChrono(ms) {
+        this.chrono.textContent = `Temps : ${this.formaterTemps(ms)}`;
     }
 }
