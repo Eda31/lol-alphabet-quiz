@@ -4,6 +4,7 @@ export class GameStats {
         this.erreurs = 0;
         this.championsTrouves = [];
         this.debut = null;
+        this.championsManques = [];
     }
 
     /**
@@ -22,7 +23,7 @@ export class GameStats {
      * @param {string} lettre 
      */
     terminerTour(lettre) {
-        const duree = Date.now() - this.debut;
+        const duree = this.debut === null ? 0 : Date.now() - this.debut;
         this.tours.push({lettre: lettre, duree: duree, erreurs: this.erreurs});
         this.erreurs = 0;
         this.debut = null;
@@ -59,5 +60,24 @@ export class GameStats {
     erreurTotal() {
         const totalErreurs = this.tours.reduce((somme, t) => somme + t.erreurs, 0);
         return totalErreurs;
+    }
+
+    /**
+     * Enregistre les champions non trouvés d'une lettre abandonnée.
+     * Chacun compte comme une erreur.
+     * @param {Array} manques - les champions non trouvés
+     */
+    ajouterManques(manques) {
+        this.championsManques.push(...manques);
+        this.erreurs += manques.length;
+    }
+
+    /**
+     * Renvoie le temps de jeu écoulé : lettres terminées + lettre en cours.
+     * @returns {number} le temps en millisecondes
+     */
+    tempsEcoule() {
+        const lettreEnCours = this.debut === null ? 0 : Date.now() - this.debut;
+        return this.tempsTotal() + lettreEnCours;
     }
 }

@@ -1,4 +1,4 @@
-#champions-trouves, #liste-finale {
+#champions-trouves, #liste-finale , #liste-manques{
     list-style: none;
     padding: 0;
     display: flex;
@@ -7,13 +7,13 @@
 }
 
 
-#champions-trouves li, #liste-finale li {
+#champions-trouves li, #liste-finale li, #liste-manques li {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#champions-trouves img, #liste-finale img {
+#champions-trouves img, #liste-finale img, #liste-manques img {
     max-width: 100%;
 }
 
@@ -21,4 +21,8 @@ body {
     background-color: black;
     color: white;
     margin: 20px;
+}
+
+li.manque {
+    opacity: 0.4;
 }
