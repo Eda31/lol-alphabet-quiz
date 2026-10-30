@@ -1,9 +1,10 @@
 import { normalizeChampionName } from '../utils/Normalize.js';
 export class ChampionModel {
-    constructor() {                    // constructeur : initialisation de l'objet
+    constructor() {
     this.version = null;
     this.champions = [];
   }
+
   /**
    * Récupère la liste des champions depuis l'API de League of Legends et les stocke dans la propriété "champions" de l'objet.
    * @returns {Promise<void>}
@@ -28,6 +29,5 @@ export class ChampionModel {
     const normalizedLetter = normalizeChampionName(letter);
     return this.champions.filter(champion => normalizeChampionName(champion.name).startsWith(normalizedLetter));
   }
-
 
 }
