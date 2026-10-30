@@ -4,6 +4,14 @@ Un jeu web où il faut deviner **tous les champions de League of Legends, lettre
 
 🎮 **Jouer en ligne : [https://eda31.github.io/lol-alphabet-quiz/](https://eda31.github.io/lol-alphabet-quiz/)**
 
+## Aperçu
+
+![Le jeu en cours de partie](docs/screenshots/jeu.png)
+
+![L'écran de résultats](docs/screenshots/fin.png)
+
+<img src="docs/screenshots/mobile.png" alt="Le jeu sur téléphone" width="300">
+
 > 🚧 Projet en cours de développement, réalisé dans le cadre de mon portfolio.
 
 ## Comment jouer
@@ -29,6 +37,16 @@ Un jeu web où il faut deviner **tous les champions de League of Legends, lettre
 - [x] Design responsive (utilisable sur téléphone)
 - [x] Déploiement en ligne avec GitHub Pages
 - [ ] Back-end Symfony : API, base de données, scores et classement
+
+## Compétences mises en pratique
+
+- **Architecture MVC** en JavaScript pur, sans framework : séparation des données, de l'affichage et de la logique de jeu
+- **Programmation asynchrone** : appels à une API avec `fetch` et `async/await`
+- **Manipulation du DOM** : création d'éléments, écouteurs d'événements, gestion d'état de l'interface
+- **Traitement de texte** : normalisation des accents et des caractères spéciaux (`normalize("NFD")` et expressions régulières)
+- **Design responsive** : flexbox, variables CSS, media queries
+- **Méthode de travail** : issues et tableau Kanban, une branche par fonctionnalité, pull requests
+- **Déploiement** : publication avec GitHub Pages
 
 ## Technologies
 
@@ -91,6 +109,13 @@ Aucune base de données pour le moment : les données des champions sont récup�
 ## Source des données
 
 Les noms et les images des champions proviennent de [Data Dragon](https://developer.riotgames.com/docs/lol#data-dragon), les données statiques publiques de Riot Games.
+
+## Pistes d'amélioration
+
+- Back-end Symfony : enregistrer les scores, comptes joueurs et classement
+- Sauvegarde de la partie en cours
+- Mode chronométré avec une durée limite par lettre
+- Tests automatisés de la logique de jeu
 
 ## Mentions légales
 
