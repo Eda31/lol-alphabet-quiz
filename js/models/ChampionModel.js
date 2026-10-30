@@ -1,4 +1,4 @@
-import { normalizeChampionName } from '../utils/normalize.js';
+import { normalizeChampionName } from '../utils/Normalize.js';
 export class ChampionModel {
     constructor() {                    // constructeur : initialisation de l'objet
     this.version = null;

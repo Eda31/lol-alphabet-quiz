@@ -1,4 +1,4 @@
-import { normalizeChampionName } from '../utils/normalize.js';
+import { normalizeChampionName } from '../utils/Normalize.js';
 export class GameModel {
     constructor(lettre, champions, allChampions) {
         this.lettre = lettre; // La lettre en cours pour laquelle le joueur doit deviner les champions.
