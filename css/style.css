@@ -1,4 +1,92 @@
-#champions-trouves, #liste-finale , #liste-manques{
+/* ---------- Couleurs du thème (à modifier ici pour tout changer) ---------- */
+:root {
+    --couleur-fond: #0c2340;
+    --couleur-carte: #16335c;
+    --couleur-accent: gold;
+    --couleur-accent-clair: #ffe44d;
+    --couleur-texte: white;
+}
+
+/* ---------- Page ---------- */
+body {
+    background-color: var(--couleur-fond);
+    color: var(--couleur-texte);
+    font-family: system-ui, sans-serif;
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 16px;
+}
+
+h1, h2, h3 {
+    color: var(--couleur-accent);
+}
+
+/* ---------- Règles : séparées du formulaire ---------- */
+#regles {
+    margin-bottom: 24px;
+}
+
+#regles summary {
+    cursor: pointer;
+    padding: 12px 0;
+}
+
+/* ---------- Formulaire ---------- */
+#formulaire-champion {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+#saisie-champion {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid var(--couleur-carte);
+    border-radius: 8px;
+    background-color: var(--couleur-carte);
+    color: var(--couleur-texte);
+}
+
+#saisie-champion:focus {
+    outline: none;
+    border-color: var(--couleur-accent);
+}
+
+#saisie-champion:disabled {
+    opacity: 0.5;
+}
+
+/* ---------- Boutons ---------- */
+button {
+    padding: 12px 16px;
+    min-height: 44px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--couleur-accent);
+    color: var(--couleur-fond);
+    transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--couleur-accent-clair);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#lettre-suivante, #abandonner, #rejouer {
+    margin-top: 12px;
+}
+
+/* ---------- Listes d'icônes ---------- */
+#champions-trouves, #liste-finale, #liste-manques {
     list-style: none;
     padding: 0;
     display: flex;
@@ -6,23 +94,34 @@
     gap: 12px;
 }
 
-
 #champions-trouves li, #liste-finale li, #liste-manques li {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 14px;
+    text-align: center;
+    padding: 8px;
+    background-color: var(--couleur-carte);
+    border-radius: 8px;
 }
 
 #champions-trouves img, #liste-finale img, #liste-manques img {
-    max-width: 100%;
-}
-
-body {
-    background-color: black;
-    color: white;
-    margin: 20px;
+    width: 64px;
+    height: auto;
+    border-radius: 6px;
 }
 
 li.manque {
     opacity: 0.4;
+}
+
+/* ---------- Grand écran (600px et plus) ---------- */
+@media (min-width: 600px) {
+    body {
+        padding: 32px;
+    }
+
+    #champions-trouves img, #liste-finale img, #liste-manques img {
+        width: 80px;
+    }
 }

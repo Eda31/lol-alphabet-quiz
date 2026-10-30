@@ -21,7 +21,7 @@ Un jeu web où il faut deviner **tous les champions de League of Legends, lettre
 - [x] Gestion des tours (A → Z)
 - [x] Score et écran de fin de partie
 - [x] Chronomètre et bouton « abandonner »
-- [ ] Design responsive (mobile)
+- [x] Design responsive (mobile)
 - [ ] Déploiement en ligne
 - [ ] Back-end Symfony : API, base de données, scores et classement
 
