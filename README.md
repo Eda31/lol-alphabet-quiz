@@ -4,6 +4,8 @@ Un jeu web où il faut deviner **tous les champions de League of Legends, lettre
 
 🎮 **Jouer en ligne : [https://eda31.github.io/lol-alphabet-quiz/](https://eda31.github.io/lol-alphabet-quiz/)**
 
+Projet personnel en JavaScript pur (sans framework), construit en architecture MVC et déployé avec GitHub Pages.
+
 ## Aperçu
 
 ![Le jeu en cours de partie](docs/screenshots/jeu.png)
@@ -11,8 +13,6 @@ Un jeu web où il faut deviner **tous les champions de League of Legends, lettre
 ![L'écran de résultats](docs/screenshots/fin.png)
 
 <img src="docs/screenshots/mobile.png" alt="Le jeu sur téléphone" width="300">
-
-> 🚧 Projet en cours de développement, réalisé dans le cadre de mon portfolio.
 
 ## Comment jouer
 
@@ -25,74 +25,73 @@ Un jeu web où il faut deviner **tous les champions de League of Legends, lettre
 
 ## Fonctionnalités
 
-- [x] Structure du projet en architecture MVC
-- [x] Chargement des champions depuis l'API Data Dragon (toujours la dernière version du jeu)
-- [x] Normalisation des noms (accents, apostrophes, casse)
-- [x] Saisie et vérification des réponses
-- [x] Affichage des icônes et compteur par lettre
-- [x] Gestion des tours (A → Z)
-- [x] Statistiques de partie : temps par lettre, erreurs, champions trouvés
-- [x] Écran de fin avec résultats triés par ordre alphabétique
-- [x] Chronomètre en direct et bouton « Abandonner la lettre »
-- [x] Design responsive (utilisable sur téléphone)
-- [x] Déploiement en ligne avec GitHub Pages
-- [ ] Back-end Symfony : API, base de données, scores et classement
+- Architecture MVC
+- Chargement des champions depuis l'API Data Dragon, toujours avec la dernière version du jeu
+- Normalisation des saisies (accents, apostrophes, espaces, majuscules)
+- Compteur et icônes des champions trouvés
+- Enchaînement des 26 lettres, de A à Z
+- Statistiques de partie : temps par lettre, erreurs, champions trouvés
+- Chronomètre en direct qui ne démarre qu'à la première saisie de chaque lettre
+- Bouton « Abandonner la lettre »
+- Écran de fin avec résultats triés par ordre alphabétique
+- Design responsive, utilisable sur téléphone
 
-## Compétences mises en pratique
+## Choix techniques
 
-- **Architecture MVC** en JavaScript pur, sans framework : séparation des données, de l'affichage et de la logique de jeu
-- **Programmation asynchrone** : appels à une API avec `fetch` et `async/await`
-- **Manipulation du DOM** : création d'éléments, écouteurs d'événements, gestion d'état de l'interface
-- **Traitement de texte** : normalisation des accents et des caractères spéciaux (`normalize("NFD")` et expressions régulières)
-- **Design responsive** : flexbox, variables CSS, media queries
-- **Méthode de travail** : issues et tableau Kanban, une branche par fonctionnalité, pull requests
-- **Déploiement** : publication avec GitHub Pages
+- **Pas de framework, pas de build** : tout est en JavaScript standard (modules ES6). Le site est un ensemble de fichiers statiques, donc hébergeable gratuitement.
+- **Une logique de normalisation unique** : le nom saisi et le nom du champion passent par la même fonction avant d'être comparés. Ainsi « kaisa », « Kai'Sa » et « KAI SA » sont équivalents, et « Maître Yi » s'écrit « maitre yi ».
+- **Un modèle de jeu par lettre** : `GameModel` ne gère qu'une seule lettre et est recréé à chaque tour. Les données qui durent toute la partie (temps, erreurs, champions trouvés) sont dans un modèle séparé, `GameStats`.
+- **La vue ne contient aucune logique** : elle affiche uniquement ce que le contrôleur lui demande. Les règles du jeu sont dans les modèles et le déroulement dans le contrôleur.
+- **Pas de back-end** : le jeu n'a pas besoin de base de données. Un classement en ligne demanderait un hébergement et une gestion de la sécurité qui ne se justifiaient pas pour ce projet.
+
+## Difficultés rencontrées
+
+- **Les noms spéciaux** (Kai'Sa, Kha'Zix, Maître Yi, Dr. Mundo) : résolus avec `normalize("NFD")` pour séparer les accents, puis une expression régulière pour ne garder que les lettres et les chiffres.
+- **L'ordre de chargement** : l'adresse des icônes dépend de la version du jeu, récupérée par une requête asynchrone. Il fallait attendre ce chargement avant de créer la vue, sinon les images pointaient vers une version `null`.
+- **La casse des noms de fichiers** : en ligne, un import écrit `normalize.js` ne trouve pas un fichier nommé `Normalize.js`, alors que Windows ne fait pas la différence. J'ai appris à vérifier chaque import avant de publier.
+- **L'écran de fin** : il a fallu garder l'historique des champions trouvés et manqués sur toute la partie, alors que le modèle d'une lettre est recréé à chaque tour.
 
 ## Technologies
 
-**Actuellement**
 - HTML5, CSS3 (variables, flexbox, media queries)
 - JavaScript (modules ES6, `async/await`, `fetch`)
-- Architecture MVC
 - API Data Dragon de Riot Games
-- Git et GitHub : branches, issues, pull requests, tableau Kanban
-- GitHub Pages pour l'hébergement
+- Git et GitHub (branches, issues, pull requests, tableau Kanban)
+- GitHub Pages
 
-**Prévues**
-- PHP / Symfony pour une API REST
-- Base de données pour les scores et le classement
+## Compétences mises en pratique
+
+- **Architecture MVC** en JavaScript pur : séparation des données, de l'affichage et de la logique de jeu
+- **Programmation asynchrone** : appels d'API avec `fetch` et `async/await`
+- **Manipulation du DOM** : création d'éléments, écouteurs d'événements, gestion de l'état de l'interface
+- **Traitement de texte** : normalisation Unicode et expressions régulières
+- **Design responsive** : approche mobile d'abord
+- **Méthode de travail** : une branche par fonctionnalité, pull requests, suivi par issues et Kanban
+- **Déploiement** : publication d'un site statique
 
 ## Architecture
-
-Le projet suit le modèle **MVC** (Modèle, Vue, Contrôleur) :
-
-- **Modèle** : gère les données (liste des champions, état d'une lettre, statistiques de la partie).
-- **Vue** : s'occupe uniquement de l'affichage.
-- **Contrôleur** : fait le lien entre le modèle et la vue, et contient le déroulement du jeu.
 
 ```
 lol-alphabet-quiz/
 ├── index.html
 ├── css/
 │   └── style.css
+├── docs/
+│   └── screenshots/
 ├── js/
 │   ├── main.js
 │   ├── models/
-│   │   ├── ChampionModel.js
-│   │   ├── GameModel.js
-│   │   └── GameStats.js
+│   │   ├── ChampionModel.js    (chargement des champions)
+│   │   ├── GameModel.js        (état d'une lettre)
+│   │   └── GameStats.js        (statistiques de la partie)
 │   ├── views/
-│   │   └── GameView.js
+│   │   └── GameView.js         (affichage)
 │   ├── controllers/
-│   │   └── GameController.js
+│   │   └── GameController.js   (déroulement du jeu)
 │   └── utils/
-│       └── Normalize.js
+│       └── Normalize.js        (normalisation des noms)
 └── README.md
 ```
-
-## Base de données
-
-Aucune base de données pour le moment : les données des champions sont récupérées en direct depuis Data Dragon. Une base sera ajoutée avec le back-end Symfony pour enregistrer les scores et afficher un classement.
 
 ## Installation et lancement en local
 
@@ -112,10 +111,11 @@ Les noms et les images des champions proviennent de [Data Dragon](https://develo
 
 ## Pistes d'amélioration
 
-- Back-end Symfony : enregistrer les scores, comptes joueurs et classement
+- Meilleur score enregistré dans le navigateur
 - Sauvegarde de la partie en cours
 - Mode chronométré avec une durée limite par lettre
 - Tests automatisés de la logique de jeu
+- Back-end (API, comptes, classement) si un hébergement adapté est disponible
 
 ## Mentions légales
 
@@ -123,4 +123,6 @@ Ce projet n'est pas affilié à Riot Games. League of Legends et ses éléments 
 
 ## Auteur
 
-**Eda31** – [GitHub](https://github.com/Eda31)
+**Eda31** – Développeuse web, diplômée du BTS SIO option SLAM
+
+[GitHub](https://github.com/Eda31) · [Portfolio](https://monportepoliomarcailloujade.weebly.com/)
